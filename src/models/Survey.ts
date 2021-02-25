@@ -28,4 +28,4 @@ class User {
     }
 }
 
-export { User };
+export { Survey };
