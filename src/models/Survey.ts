@@ -7,7 +7,7 @@ import {
 
 import { v4 as uuid } from 'uuid';
 
-@Entity('survey')
+@Entity('surveys')
 class Survey {
     @PrimaryColumn()
     readonly id: string;
