@@ -4,12 +4,29 @@ import createConnection from './../database';
 
 describe("Users", () => {
     beforeAll(async () => {
-        
+        const connection = await createConnection();
+        await connection.runMigrations();
     });
-    request(app).post("/users")
-        .send({
-            name: "João Mangueira3",
-            email: "joao3@joao.com"
-        })
+
+    it("should be able to create a new user", async () => {
+        const response = await request(app).post("/users")
+            .send({
+                name: "João Mangueira4",
+                email: "joao4@joao.com"
+            });
+
+        expect(response.status).toBe(201);
+    });
+
+    it("should be able to create a new user with exists email", async () => {
+        const response = await request(app).post("/users")
+            .send({
+                name: "João Mangueira3",
+                email: "joao3@joao.com"
+            });
+
+        expect(response.status).toBe(400);
+    });
+
 })
 
