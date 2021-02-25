@@ -15,14 +15,22 @@ class SendMailService {
                     pass: account.pass
                 }
             });
-            
+
             this.client = transporter;
         });
     }
 
-    async execute() {
+    async execute(to: string, subject: string, body: string) {
+        const message = await this.client.sendMail({
+            to,
+            subject,
+            html: body,
+            from: 'NPS <noreplay@nps.com.br'
+        })
 
+        console.log('Message sent: %s', message.messageId);
+        console.log('Prview URL: %s', nodemailer.getTestMessageUrl(message));
     }
 }
 
-export { SendMailService };
+export default new SendMailService();
