@@ -4,6 +4,7 @@ import { UsersRepository } from '../repositories/UsersRepository';
 import { SurveysRepository } from '../repositories/SurveysRepository';
 import { SurveysUsersRepository } from '../repositories/SurveysUsersRepository';
 import SendMailService from '../services/SendMailService';
+import { resolve } from 'path';
 
 class SendMailController {
     async execute(request: Request, response: Response) {
@@ -40,7 +41,20 @@ class SendMailController {
 
         await surveysUsersRepository.save(surveyUser);
 
-        await SendMailService.execute(email, surveyAlreadyExists.title, surveyAlreadyExists.description);
+        const npsPath = resolve(__dirname, "..", "views", "emails", "npsMail.hbs");
+
+        const variables = {
+            name: userAlreadyExists.name,
+            title: surveyAlreadyExists.title,
+            description: surveyAlreadyExists.description,
+        };
+
+        await SendMailService.execute(
+            email,
+            surveyAlreadyExists.title,
+            variables,
+            npsPath
+        );
 
         return response.status(201).json(surveyUser);
     }
