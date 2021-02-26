@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from 'nodemailer';
+import path from 'path';
 
 class SendMailService {
 
