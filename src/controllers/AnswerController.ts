@@ -11,7 +11,7 @@ class AnswerController {
         const { value } = request.params;
         const { u } = request.query;
 
-        const surveyUsersRepository = getCustomRepository(SurveysRepository);
+        const surveyUsersRepository = getCustomRepository(SurveysUsersRepository);
 
         const surveyUser = await surveyUsersRepository.findOne({
             id: String(u),
